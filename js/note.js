@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadDiary(currentDiaryId);
             } else {
                 console.log("No valid ID, redirecting to list page");
-                window.location.href = 'index.html';
+                window.location.href = 'dashboard.html';
             }
             
             // Apply focus mode if enabled
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div style="padding: 20px; background-color: #fff; border-radius: 8px; margin: 20px auto; max-width: 600px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                         <h2 style="color: #dc3545;"><i class="fa-solid fa-triangle-exclamation"></i> Something went wrong</h2>
                         <p>There was an error loading the notebook. Please try refreshing the page or go back to the notebooks list.</p>
-                        <a href="index.html" style="display: inline-block; margin-top: 20px; padding: 8px 16px; background-color: #2a3f54; color: white; text-decoration: none; border-radius: 4px;">
+                        <a href="dashboard.html" style="display: inline-block; margin-top: 20px; padding: 8px 16px; background-color: #2a3f54; color: white; text-decoration: none; border-radius: 4px;">
                             <i class="fa-solid fa-arrow-left"></i> Back to Notebooks
                         </a>
                     </div>
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('diaries', JSON.stringify(diaries));
             
             // Redirect to list page
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
             
             // Hide loading animation
             hideLoading();

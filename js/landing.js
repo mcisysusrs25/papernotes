@@ -41,8 +41,8 @@ function setupActiveNavLinks() {
     const navLinks = document.querySelectorAll('.nav-link');
     
     // Set initial active link based on URL
-    if (window.location.pathname.includes('landing.html')) {
-        const homeLink = document.querySelector('a[href="landing.html"]');
+    if (window.location.pathname.includes('index.html')) {
+        const homeLink = document.querySelector('a[href="index.html"]');
         if (homeLink) {
             navLinks.forEach(l => l.classList.remove('active'));
             homeLink.classList.add('active');

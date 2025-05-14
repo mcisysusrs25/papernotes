@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaperNotes - Notebooks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
+        /* Cover image preview styles */
+        .cover-preview {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+        
+        /* Cover type options */
+        .cover-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .cover-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .cover-option i {
+            margin-right: 5px;
+        }
+        
+        .cover-option.selected {
+            background-color: #4a6fa5;
+            color: white;
+            border-color: #3c5a8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="toolbar" id="main-toolbar">
+            <div class="toolbar-content">
+                <div class="brand">
+                    <h1 class="app-title"><i class="fa-solid fa-book-open"></i> PaperNotes</h1>
+                </div>
+                
+                <div class="control-btns">
+                    <button id="new-diary-btn" class="icon-btn" title="Create New Notebook">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="notebooks-container" id="notebooks-container">
+                <h2 class="section-title">Your Notebooks</h2>
+                <div class="notebooks-grid" id="notebooks-grid">
+                    <!-- Notebooks will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h3>About PaperNotes</h3>
+                <p>PaperNotes is a beautiful, minimalist note-taking application designed to help you capture your thoughts with style and elegance.</p>
+            </div>
+            
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" id="terms-link">Terms of Use</a></li>
+                    <li><a href="#" id="privacy-link">Privacy Policy</a></li>
+                    <li><a href="#" id="cookie-link">Cookie Policy</a></li>
+                    <li><a href="#" id="data-link">Data Security</a></li>
+                    <li><a href="#" id="contact-link">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section features">
+                <h3>Features</h3>
+                <ul>
+                    <li>Multiple Notebooks</li>
+                    <li>Choice of Fonts</li>
+                    <li>Focus Mode</li>
+                    <li>PDF & DOCX Export</li>
+                    <li>Local Storage</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            
+            <p>© 2025 PaperNotes. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- New Notebook Modal -->
+    <div class="modal" id="new-diary-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Notebook</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="diary-name">Notebook Name</label>
+                <input type="text" id="diary-name" class="form-control" placeholder="My Notes">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Cover Type</label>
+                <div class="cover-options">
+                    <div class="cover-option image-type-option selected" data-type="color">
+                        <i class="fa-solid fa-palette"></i> Color
+                    </div>
+                    <div class="cover-option image-type-option" data-type="image">
+                        <i class="fa-solid fa-image"></i> Upload Image
+                    </div>
+                    <div class="cover-option image-type-option" data-type="link">
+                        <i class="fa-solid fa-link"></i> Image URL
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="cover-image-section" style="display: none;">
+                <label class="form-label" for="cover-image-input">Upload Cover Image</label>
+                <input type="file" id="cover-image-input" class="form-control" accept="image/*">
+                <div id="cover-image-preview" class="cover-preview"></div>
+                <p class="form-hint">Maximum file size: 5MB</p>
+            </div>
+            
+            <div class="form-group" id="cover-link-section" style="display: none;">
+                <label class="form-label" for="cover-image-link">Image URL</label>
+                <input type="url" id="cover-image-link" class="form-control" placeholder="https://example.com/image.jpg">
+                <p class="form-hint">Enter a valid URL to an image</p>
+            </div>
+            
+            <div class="form-group" id="color-picker-section">
+                <label class="form-label">Choose Page Color</label>
+                <div class="theme-options">
+                    <div class="theme-option selected" data-page="#f5f1e7" style="background-color: #f5f1e7;"></div>
+                    <div class="theme-option" data-page="#ffffff" style="background-color: #ffffff;"></div>
+                    <div class="theme-option" data-page="#f0f8ff" style="background-color: #f0f8ff;"></div>
+                    <div class="theme-option" data-page="#f1f8e9" style="background-color: #f1f8e9;"></div>
+                    <div class="theme-option" data-page="#fff0f5" style="background-color: #fff0f5;"></div>
+                    <div class="theme-option" data-page="#f5f5f5" style="background-color: #f5f5f5;"></div>
+                    <div class="theme-option" data-page="#fffde7" style="background-color: #fffde7;"></div>
+                    <div class="theme-option" data-page="#e3f2fd" style="background-color: #e3f2fd;"></div>
+                    <div class="theme-option" data-page="#f3e5f5" style="background-color: #f3e5f5;"></div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-secondary close-modal-btn">Cancel</button>
+                <button id="create-diary-btn" class="btn btn-primary">Create Notebook</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terms of Use Modal -->
+    <div class="modal legal-modal" id="terms-modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Terms of Use</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body legal-content">
+                <h4>1. Acceptance of Terms</h4>
+                <p>By accessing and using PaperNotes, you acknowledge and agree to these Terms of Use. If you do not agree to these terms, please do not use the application.</p>
+                
+                <h4>2. User Content</h4>
+                <p>All notes and content created with PaperNotes are stored locally on your device. We do not have access to this content, nor do we store it on our servers. You are solely responsible for the content you create and store using this application.</p>
+                
+                <h4>3. Intellectual Property</h4>
+                <p>PaperNotes and all related features, functionality, and design elements are owned by PaperNotes and are protected by copyright, trademark, and other intellectual property laws.</p>
+                
+                <h4>4. Prohibited Uses</h4>
+                <p>You agree not to use PaperNotes to:</p>
+                <ul>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Infringe upon the rights of others</li>
+                    <li>Attempt to interfere with or disrupt the application's functionality</li>
+                    <li>Attempt to gain unauthorized access to any part of the application</li>
+                </ul>
+                
+                <h4>5. Disclaimer of Warranties</h4>
+                <p>PaperNotes is provided "as is" and "as available" without any warranties of any kind, either express or implied. We do not guarantee that the application will be error-free or uninterrupted.</p>
+                
+                <h4>6. Limitation of Liability</h4>
+                <p>In no event shall PaperNotes be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+                
+                <h4>7. Changes to Terms</h4>
+                <p>We reserve the right to modify these Terms of Use at any time. Continued use of PaperNotes after any such changes constitutes your acceptance of the new Terms of Use.</p>
+                
+                <h4>8. Governing Law</h4>
+                <p>These Terms of Use shall be governed by and construed in accordance with the laws of the jurisdiction in which we operate, without regard to its conflict of law provisions.</p>
+                
+                <h4>9. Contact Information</h4>
+                <p>If you have any questions about these Terms of Use, please contact us at support@elegantnotes.com.</p>
+                
+                <p class="legal-last-updated">Last updated: May 13, 2025</p>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Privacy Policy Modal -->
+    <div class="modal legal-modal" id="privacy-modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Privacy Policy</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body legal-content">
+                <h4>Introduction</h4>
+                <p>At PaperNotes, we are committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our application.</p>
+                
+                <h4>Information We Don't Collect</h4>
+                <p>PaperNotes is designed with privacy in mind. We do not collect, store, or process any of your notes or personal information. All your content remains on your device and is stored locally using your browser's localStorage feature.</p>
+                
+                <h4>Local Storage</h4>
+                <p>PaperNotes uses localStorage to save your notebooks and preferences. This data is stored directly on your device and is not accessible to us or any third parties. The data remains on your device until you clear your browser's cache or localStorage.</p>
+                
+                <h4>Analytics and Cookies</h4>
+                <p>We do not use tracking cookies or analytics tools to collect information about your usage of PaperNotes.</p>
+                
+                <h4>Data Export</h4>
+                <p>When you export your notes as PDF or DOCX files, this process happens entirely on your device. Your content is not transmitted to our servers or any third-party servers during this process.</p>
+                
+                <h4>Children's Privacy</h4>
+                <p>PaperNotes is not directed at children under the age of 13, and we do not knowingly collect personal information from children under 13.</p>
+                
+                <h4>Changes to This Privacy Policy</h4>
+                <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+                
+                <h4>Contact Us</h4>
+                <p>If you have any questions about this Privacy Policy, please contact us at privacy@elegantnotes.com.</p>
+                
+                <p class="legal-last-updated">Last updated: May 13, 2025</p>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cookie Policy Modal -->
+    <div class="modal legal-modal" id="cookie-modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Cookie Policy</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body legal-content">
+                <h4>What Are Cookies</h4>
+                <p>Cookies are small text files that are placed on your device by websites you visit. They are widely used to make websites work more efficiently and provide information to the website owners.</p>
+                
+                <h4>How We Use Cookies</h4>
+                <p>PaperNotes does not use traditional cookies. Instead, we use localStorage, a similar technology that stores data directly in your browser without sending it to a server.</p>
+                
+                <h4>localStorage Usage</h4>
+                <p>We use localStorage for the following purposes:</p>
+                <ul>
+                    <li>Storing your notebooks and their contents</li>
+                    <li>Saving your preferences (such as font choice and focus mode settings)</li>
+                    <li>Remembering which notebook you last accessed</li>
+                </ul>
+                
+                <h4>Your Control Over localStorage</h4>
+                <p>You can clear all data stored by PaperNotes by clearing your browser's localStorage. This can typically be done through your browser's settings or privacy controls.</p>
+                
+                <h4>Third-Party Cookies</h4>
+                <p>PaperNotes does not use any third-party services that may set cookies.</p>
+                
+                <h4>Changes to This Cookie Policy</h4>
+                <p>We may update our Cookie Policy from time to time. Any changes will be posted on this page.</p>
+                
+                <h4>Contact Us</h4>
+                <p>If you have any questions about our Cookie Policy, please contact us at support@elegantnotes.com.</p>
+                
+                <p class="legal-last-updated">Last updated: May 13, 2025</p>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Data Security Modal -->
+    <div class="modal legal-modal" id="data-modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Data Security</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body legal-content">
+                <h4>Our Approach to Data Security</h4>
+                <p>At PaperNotes, we take the security of your data seriously. Here's how we protect your information:</p>
+                
+                <h4>Local Storage Security</h4>
+                <p>PaperNotes stores all your notebooks and content in your browser's localStorage. This means:</p>
+                <ul>
+                    <li>Your data never leaves your device</li>
+                    <li>We don't have access to your notes</li>
+                    <li>Your data is subject to your browser's security measures</li>
+                </ul>
+                
+                <h4>Export Security</h4>
+                <p>When you export your notes as PDF or DOCX files, this process happens entirely on your device. Your content is not transmitted over the internet during export.</p>
+                
+                <h4>Limitations of localStorage</h4>
+                <p>It's important to understand that localStorage has some limitations:</p>
+                <ul>
+                    <li>Data can be lost if you clear your browser cache or localStorage</li>
+                    <li>Data is not synchronized across different devices</li>
+                    <li>There are storage limits that vary by browser (typically 5-10MB)</li>
+                </ul>
+                
+                <h4>Recommended Security Practices</h4>
+                <p>For optimal security of your notes, we recommend:</p>
+                <ul>
+                    <li>Regularly export important notebooks as backup</li>
+                    <li>Use a password-protected device</li>
+                    <li>Keep your browser updated to benefit from the latest security features</li>
+                </ul>
+                
+                <h4>Contact Us</h4>
+                <p>If you have any questions about data security, please contact us at security@elegantnotes.com.</p>
+                
+                <p class="legal-last-updated">Last updated: May 13, 2025</p>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contact Us Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Contact Us</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="contact-name">Your Name</label>
+                    <input type="text" id="contact-name" class="form-control" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contact-email">Email Address</label>
+                    <input type="email" id="contact-email" class="form-control" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contact-subject">Subject</label>
+                    <select id="contact-subject" class="form-control">
+                        <option value="">Select a subject</option>
+                        <option value="support">Technical Support</option>
+                        <option value="feedback">Feedback/Suggestions</option>
+                        <option value="bug">Report a Bug</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="contact-message">Message</label>
+                    <textarea id="contact-message" class="form-control" rows="5" placeholder="Type your message here..."></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary close-modal-btn">Cancel</button>
+                <button id="send-message-btn" class="btn btn-primary">Send Message</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast messages container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

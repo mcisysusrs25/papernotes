@@ -1,104 +1,1014 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PaperNotes - Notebooks</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <style>
-        /* Cover image preview styles */
-        .cover-preview {
-            width: 100px;
-            height: 100px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            display: none;
-        }
-        
-        /* Cover type options */
-        .cover-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .cover-option {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background-color: #f8f8f8;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .cover-option i {
-            margin-right: 5px;
-        }
-        
-        .cover-option.selected {
-            background-color: #4a6fa5;
-            color: white;
-            border-color: #3c5a8a;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaperNotes Premium - Elevate Your Note-Taking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #1F2937;
+    background-color: #F9FAFB;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+/* Navbar styles */
+nav {
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.logo-icon {
+    color: #2a3f54;
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.logo-text {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.logo-premium {
+    margin-left: 0.5rem;
+    background-color: #10B981;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.logo-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50px;
+}
+
+.nav-links {
+    display: none;
+}
+
+.nav-links a {
+    color: #4B5563;
+    margin: 0 1rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #2a3f54;
+}
+
+.nav-links a.active {
+    color: #4F46E5;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4F46E5;
+}
+
+.nav-buttons {
+    display: none;
+}
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    background: none;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #F3F4F6;
+}
+
+.login-btn span:first-child {
+    margin-right: 0.5rem;
+}
+
+.try-free-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, #2a3f54, #3B82F6);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: opacity 0.3s;
+}
+
+.try-free-btn:hover {
+    opacity: 0.9;
+}
+
+.trial-sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.top-right {
+    top: -4px;
+    right: -4px;
+}
+
+.bottom-left {
+    bottom: -4px;
+    left: -4px;
+}
+
+.mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background-color: #4B5563;
+    margin-bottom: 4px;
+}
+
+.mobile-menu-btn span:last-child {
+    margin-bottom: 0;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(to right, #EFF6FF, #EEF2FF);
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #1F2937;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: #4B5563;
+    max-width: 42rem;
+    margin: 0 auto 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-btn {
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+    margin-bottom: 1rem;
+    min-width: 200px;
+}
+
+.hero-btn-primary {
+    background-color: #2a3f54;
+    color: white;
+    border: none;
+}
+
+.hero-btn-primary:hover {
+    background-color: #1e2a3a;
+}
+
+.hero-btn-secondary {
+    background-color: transparent;
+    color: #2a3f54;
+    border: 2px solid #2a3f54;
+}
+
+.hero-btn-secondary:hover {
+    background-color: #2a3f54;
+    color: white;
+}
+
+/* Features section */
+.features {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    color: #4B5563;
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #DBEAFE;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #2a3f54;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.feature-card p {
+    color: #4B5563;
+}
+
+/* Testimonials section */
+.testimonials {
+    padding: 4rem 0;
+    background-color: #F9FAFB;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-text {
+    color: #4B5563;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #E5E7EB;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B7280;
+    margin-right: 1rem;
+}
+
+.author-info h4 {
+    font-weight: 500;
+}
+
+.author-info p {
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+/* FAQ section */
+.faq {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.faq-container {
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 1rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.faq-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem;
+    text-align: left;
+    font-weight: 500;
+    color: #1F2937;
+    background: none;
+    border: none;
+}
+
+.faq-toggle:focus {
+    outline: none;
+}
+
+.faq-content {
+    padding: 1.25rem;
+    border-top: 1px solid #E5E7EB;
+    background-color: #F9FAFB;
+    display: none;
+}
+
+.faq-content p {
+    color: #4B5563;
+}
+
+/* CTA section */
+.cta {
+    padding: 4rem 0;
+    background: linear-gradient(to right, #2a3f54, #3B82F6);
+    color: white;
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.cta p {
+    font-size: 1.25rem;
+    max-width: 42rem;
+    margin: 0 auto 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background-color: white;
+    color: #2a3f54;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #F3F4F6;
+}
+
+/* Footer */
+.footer {
+    background-color: #1F2937;
+    color: white;
+    padding: 3rem 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.footer-section h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    color: #D1D5DB;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #D1D5DB;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-features {
+    list-style: none;
+    color: #D1D5DB;
+}
+
+.footer-features li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid #374151;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    text-align: center;
+    color: #9CA3AF;
+}
+
+/* Modal */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    max-width: 28rem;
+    width: 100%;
+    margin: 0 1rem;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    background: linear-gradient(to right, #2a3f54, #3B82F6);
+    padding: 1.5rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header-bg {
+    position: absolute;
+    background-color: white;
+    opacity: 0.05;
+    border-radius: 9999px;
+}
+
+.modal-header-bg-1 {
+    top: 0;
+    right: 0;
+    width: 10rem;
+    height: 10rem;
+    margin-right: -5rem;
+    margin-top: -5rem;
+}
+
+.modal-header-bg-2 {
+    bottom: 0;
+    left: 0;
+    width: 5rem;
+    height: 5rem;
+    margin-left: -2.5rem;
+    margin-bottom: -2.5rem;
+}
+
+.modal-title {
+    position: relative;
+    z-index: 10;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.modal-subtitle {
+    position: relative;
+    z-index: 10;
+    color: #BFDBFE;
+    font-size: 0.875rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    color: #4B5563;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-required {
+    color: #EF4444;
+}
+
+.form-optional {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.5rem;
+    background-color: #F9FAFB;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #2a3f54;
+    box-shadow: 0 0 0 3px rgba(42, 63, 84, 0.2);
+}
+
+.form-hint {
+    color: #6B7280;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+}
+
+.form-checkbox input {
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-top: 0.25rem;
+    margin-right: 0.5rem;
+    accent-color: #2a3f54;
+}
+
+.form-checkbox-label {
+    color: #4B5563;
+    font-size: 0.875rem;
+}
+
+.form-link {
+    color: #2a3f54;
+    text-decoration: underline;
+}
+
+.form-link:hover {
+    color: #3B82F6;
+}
+
+.form-submit {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(to right, #2a3f54, #3B82F6);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-submit:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.modal-close {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: #4B5563;
+}
+
+.modal-decoration {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 5rem;
+    height: 5rem;
+    color: #F3F4F6;
+    transform: rotate(45deg) translate(2rem, 2rem);
+}
+
+/* Toast notifications */
+.toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 50;
+}
+
+.toast {
+    background-color: #3B82F6;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    opacity: 0;
+    transform: translateX(1rem);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast-success {
+    background-color: #10B981;
+}
+
+.toast-error {
+    background-color: #EF4444;
+}
+
+.toast-icon {
+    margin-right: 0.75rem;
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+    .nav-links, .nav-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .mobile-menu-btn {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero-buttons {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .hero-btn {
+        margin: 0 0.5rem;
+    }
+
+    .features-grid, .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .features-grid, .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+</style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="toolbar" id="main-toolbar">
-            <div class="toolbar-content">
-                <div class="brand">
-                    <h1 class="app-title"><i class="fa-solid fa-book-open"></i> PaperNotes</h1>
-                </div>
-                
-                <div class="control-btns">
-                    <button id="new-diary-btn" class="icon-btn" title="Create New Notebook">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="main-content">
-            <div class="notebooks-container" id="notebooks-container">
-                <h2 class="section-title">Your Notebooks</h2>
-                <div class="notebooks-grid" id="notebooks-grid">
-                    <!-- Notebooks will be dynamically added here -->
+<div class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-shine"></div>
+                <span class="logo-icon"><i class="fa-solid fa-book-open"></i></span>
+                <span class="logo-text">PaperNotes</span>
+                <div class="logo-premium">
+                    <i class="fa-solid fa-leaf"></i>
                 </div>
             </div>
-        </div>
-        
-        
-    </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-section about">
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#features">Features</a>
+                <a href="#faqs">FAQs</a>
+            </div>
+
+            <div class="nav-buttons">
+                <button id="tryFreeBtn" class="try-free-btn">
+                    <span>Try For Free</span>
+                    <div class="trial-sparkle top-right"></div>
+                    <div class="trial-sparkle bottom-left"></div>
+                </button>
+            </div>
+
+            <div class="mobile-menu-btn" id="mobileMenuButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your Digital Notebook Solution</h1>
+            <p>Save trees, use digital notes. Experience the most elegant and eco-friendly way to capture your thoughts and ideas.</p>
+            <div class="hero-buttons">
+                <a href="#" class="hero-btn hero-btn-primary" id="heroTryFreeBtn">Start For Free</a>
+                <a href="#features" class="hero-btn hero-btn-secondary">See Features</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Digital Notes?</h2>
+                <p>Save trees, use digital notes. Our powerful features help you stay organized while reducing your environmental impact.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Sync</h3>
+                    <p>Access your notes from any device. All your notebooks are synced across your desktop, phone, and tablet.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3>Custom Themes</h3>
+                    <p>Choose from dozens of premium themes or create your own. Customize fonts, colors, and layouts to match your style.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-folder-tree"></i>
+                    </div>
+                    <h3>Advanced Organization</h3>
+                    <p>Create nested notebooks, custom tags, and powerful search filters to keep everything perfectly organized.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3>Secure Encryption</h3>
+                    <p>Add password protection to sensitive notebooks. Your data is encrypted and secure.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-file-export"></i>
+                    </div>
+                    <h3>Export Options</h3>
+                    <p>Export your notes as PDF, DOCX, HTML, Markdown, or plain text. Perfect for sharing or printing.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3>Smart Templates</h3>
+                    <p>Choose from dozens of premium templates for journals, planners, recipes, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Users Say</h2>
+                <p>Join thousands of eco-conscious users who have transformed their note-taking experience.</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"PaperNotes has completely changed how I organize my thoughts. Not only am I more productive, but I feel good knowing I'm saving paper with every note I take."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Designer & Blogger</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"As a student, I used to go through dozens of notebooks each semester. Switching to PaperNotes has not only organized my studies but helped me reduce my environmental footprint."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Graduate Student</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Our company has gone completely paperless thanks to PaperNotes. We've saved thousands of sheets of paper while improving our team's collaboration and productivity."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Emily Rodriguez</h4>
+                            <p>Small Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faqs" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about PaperNotes Premium.</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-toggle">
+                        Can I try Premium before subscribing? <i class="fa-solid fa-plus text-primary"></i>
+                    </button>
+                    <div class="faq-content">
+                        <p>Absolutely! We offer a 14-day free trial of PaperNotes Premium. You'll get full access to all Premium features during the trial period. No credit card is required to start the trial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Save Trees, Use Digital Notes</h2>
+            <p>Join thousands of eco-conscious users who have already made the switch to PaperNotes.</p>
+            <button id="ctaTryFreeBtn" class="cta-button">Try For Free</button>
+        </div>
+    </section>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
                 <h3>About PaperNotes</h3>
                 <p>PaperNotes is a beautiful, minimalist note-taking application designed to help you capture your thoughts with style and elegance.</p>
             </div>
-            
-            <div class="footer-section links">
+
+            <div class="footer-section">
                 <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#" id="terms-link">Terms of Use</a></li>
-                    <li><a href="#" id="privacy-link">Privacy Policy</a></li>
-                    <li><a href="#" id="cookie-link">Cookie Policy</a></li>
-                    <li><a href="#" id="data-link">Data Security</a></li>
-                    <li><a href="#" id="contact-link">Contact Us</a></li>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Data Security</a></li>
+                    <li><a href="#">Contact Us</a></li>
                 </ul>
             </div>
-            
-            <div class="footer-section features">
+
+            <div class="footer-section">
                 <h3>Features</h3>
-                <ul>
+                <ul class="footer-features">
                     <li>Multiple Notebooks</li>
                     <li>Choice of Fonts</li>
                     <li>Focus Mode</li>
@@ -107,300 +1017,240 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
-            
             <p>© 2025 PaperNotes. All rights reserved.</p>
         </div>
-    </footer>
-    
-    <!-- New Notebook Modal -->
-    <div class="modal" id="new-diary-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Create New Notebook</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="diary-name">Notebook Name</label>
-                <input type="text" id="diary-name" class="form-control" placeholder="My Notes">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Cover Type</label>
-                <div class="cover-options">
-                    <div class="cover-option image-type-option selected" data-type="color">
-                        <i class="fa-solid fa-palette"></i> Color
-                    </div>
-                    <div class="cover-option image-type-option" data-type="image">
-                        <i class="fa-solid fa-image"></i> Upload Image
-                    </div>
-                    <div class="cover-option image-type-option" data-type="link">
-                        <i class="fa-solid fa-link"></i> Image URL
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group" id="cover-image-section" style="display: none;">
-                <label class="form-label" for="cover-image-input">Upload Cover Image</label>
-                <input type="file" id="cover-image-input" class="form-control" accept="image/*">
-                <div id="cover-image-preview" class="cover-preview"></div>
-                <p class="form-hint">Maximum file size: 5MB</p>
-            </div>
-            
-            <div class="form-group" id="cover-link-section" style="display: none;">
-                <label class="form-label" for="cover-image-link">Image URL</label>
-                <input type="url" id="cover-image-link" class="form-control" placeholder="https://example.com/image.jpg">
-                <p class="form-hint">Enter a valid URL to an image</p>
-            </div>
-            
-            <div class="form-group" id="color-picker-section">
-                <label class="form-label">Choose Page Color</label>
-                <div class="theme-options">
-                    <div class="theme-option selected" data-page="#f5f1e7" style="background-color: #f5f1e7;"></div>
-                    <div class="theme-option" data-page="#ffffff" style="background-color: #ffffff;"></div>
-                    <div class="theme-option" data-page="#f0f8ff" style="background-color: #f0f8ff;"></div>
-                    <div class="theme-option" data-page="#f1f8e9" style="background-color: #f1f8e9;"></div>
-                    <div class="theme-option" data-page="#fff0f5" style="background-color: #fff0f5;"></div>
-                    <div class="theme-option" data-page="#f5f5f5" style="background-color: #f5f5f5;"></div>
-                    <div class="theme-option" data-page="#fffde7" style="background-color: #fffde7;"></div>
-                    <div class="theme-option" data-page="#e3f2fd" style="background-color: #e3f2fd;"></div>
-                    <div class="theme-option" data-page="#f3e5f5" style="background-color: #f3e5f5;"></div>
-                </div>
-            </div>
-            
-            <div class="form-actions">
-                <button class="btn btn-secondary close-modal-btn">Cancel</button>
-                <button id="create-diary-btn" class="btn btn-primary">Create Notebook</button>
-            </div>
-        </div>
     </div>
-    
-    <!-- Terms of Use Modal -->
-    <div class="modal legal-modal" id="terms-modal">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Terms of Use</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body legal-content">
-                <h4>1. Acceptance of Terms</h4>
-                <p>By accessing and using PaperNotes, you acknowledge and agree to these Terms of Use. If you do not agree to these terms, please do not use the application.</p>
-                
-                <h4>2. User Content</h4>
-                <p>All notes and content created with PaperNotes are stored locally on your device. We do not have access to this content, nor do we store it on our servers. You are solely responsible for the content you create and store using this application.</p>
-                
-                <h4>3. Intellectual Property</h4>
-                <p>PaperNotes and all related features, functionality, and design elements are owned by PaperNotes and are protected by copyright, trademark, and other intellectual property laws.</p>
-                
-                <h4>4. Prohibited Uses</h4>
-                <p>You agree not to use PaperNotes to:</p>
-                <ul>
-                    <li>Violate any applicable laws or regulations</li>
-                    <li>Infringe upon the rights of others</li>
-                    <li>Attempt to interfere with or disrupt the application's functionality</li>
-                    <li>Attempt to gain unauthorized access to any part of the application</li>
-                </ul>
-                
-                <h4>5. Disclaimer of Warranties</h4>
-                <p>PaperNotes is provided "as is" and "as available" without any warranties of any kind, either express or implied. We do not guarantee that the application will be error-free or uninterrupted.</p>
-                
-                <h4>6. Limitation of Liability</h4>
-                <p>In no event shall PaperNotes be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
-                
-                <h4>7. Changes to Terms</h4>
-                <p>We reserve the right to modify these Terms of Use at any time. Continued use of PaperNotes after any such changes constitutes your acceptance of the new Terms of Use.</p>
-                
-                <h4>8. Governing Law</h4>
-                <p>These Terms of Use shall be governed by and construed in accordance with the laws of the jurisdiction in which we operate, without regard to its conflict of law provisions.</p>
-                
-                <h4>9. Contact Information</h4>
-                <p>If you have any questions about these Terms of Use, please contact us at support@elegantnotes.com.</p>
-                
-                <p class="legal-last-updated">Last updated: May 13, 2025</p>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-primary close-modal-btn">I Understand</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Privacy Policy Modal -->
-    <div class="modal legal-modal" id="privacy-modal">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Privacy Policy</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body legal-content">
-                <h4>Introduction</h4>
-                <p>At PaperNotes, we are committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our application.</p>
-                
-                <h4>Information We Don't Collect</h4>
-                <p>PaperNotes is designed with privacy in mind. We do not collect, store, or process any of your notes or personal information. All your content remains on your device and is stored locally using your browser's localStorage feature.</p>
-                
-                <h4>Local Storage</h4>
-                <p>PaperNotes uses localStorage to save your notebooks and preferences. This data is stored directly on your device and is not accessible to us or any third parties. The data remains on your device until you clear your browser's cache or localStorage.</p>
-                
-                <h4>Analytics and Cookies</h4>
-                <p>We do not use tracking cookies or analytics tools to collect information about your usage of PaperNotes.</p>
-                
-                <h4>Data Export</h4>
-                <p>When you export your notes as PDF or DOCX files, this process happens entirely on your device. Your content is not transmitted to our servers or any third-party servers during this process.</p>
-                
-                <h4>Children's Privacy</h4>
-                <p>PaperNotes is not directed at children under the age of 13, and we do not knowingly collect personal information from children under 13.</p>
-                
-                <h4>Changes to This Privacy Policy</h4>
-                <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-                
-                <h4>Contact Us</h4>
-                <p>If you have any questions about this Privacy Policy, please contact us at privacy@elegantnotes.com.</p>
-                
-                <p class="legal-last-updated">Last updated: May 13, 2025</p>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-primary close-modal-btn">I Understand</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Cookie Policy Modal -->
-    <div class="modal legal-modal" id="cookie-modal">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Cookie Policy</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body legal-content">
-                <h4>What Are Cookies</h4>
-                <p>Cookies are small text files that are placed on your device by websites you visit. They are widely used to make websites work more efficiently and provide information to the website owners.</p>
-                
-                <h4>How We Use Cookies</h4>
-                <p>PaperNotes does not use traditional cookies. Instead, we use localStorage, a similar technology that stores data directly in your browser without sending it to a server.</p>
-                
-                <h4>localStorage Usage</h4>
-                <p>We use localStorage for the following purposes:</p>
-                <ul>
-                    <li>Storing your notebooks and their contents</li>
-                    <li>Saving your preferences (such as font choice and focus mode settings)</li>
-                    <li>Remembering which notebook you last accessed</li>
-                </ul>
-                
-                <h4>Your Control Over localStorage</h4>
-                <p>You can clear all data stored by PaperNotes by clearing your browser's localStorage. This can typically be done through your browser's settings or privacy controls.</p>
-                
-                <h4>Third-Party Cookies</h4>
-                <p>PaperNotes does not use any third-party services that may set cookies.</p>
-                
-                <h4>Changes to This Cookie Policy</h4>
-                <p>We may update our Cookie Policy from time to time. Any changes will be posted on this page.</p>
-                
-                <h4>Contact Us</h4>
-                <p>If you have any questions about our Cookie Policy, please contact us at support@elegantnotes.com.</p>
-                
-                <p class="legal-last-updated">Last updated: May 13, 2025</p>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-primary close-modal-btn">I Understand</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Data Security Modal -->
-    <div class="modal legal-modal" id="data-modal">
-        <div class="modal-content large-modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Data Security</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body legal-content">
-                <h4>Our Approach to Data Security</h4>
-                <p>At PaperNotes, we take the security of your data seriously. Here's how we protect your information:</p>
-                
-                <h4>Local Storage Security</h4>
-                <p>PaperNotes stores all your notebooks and content in your browser's localStorage. This means:</p>
-                <ul>
-                    <li>Your data never leaves your device</li>
-                    <li>We don't have access to your notes</li>
-                    <li>Your data is subject to your browser's security measures</li>
-                </ul>
-                
-                <h4>Export Security</h4>
-                <p>When you export your notes as PDF or DOCX files, this process happens entirely on your device. Your content is not transmitted over the internet during export.</p>
-                
-                <h4>Limitations of localStorage</h4>
-                <p>It's important to understand that localStorage has some limitations:</p>
-                <ul>
-                    <li>Data can be lost if you clear your browser cache or localStorage</li>
-                    <li>Data is not synchronized across different devices</li>
-                    <li>There are storage limits that vary by browser (typically 5-10MB)</li>
-                </ul>
-                
-                <h4>Recommended Security Practices</h4>
-                <p>For optimal security of your notes, we recommend:</p>
-                <ul>
-                    <li>Regularly export important notebooks as backup</li>
-                    <li>Use a password-protected device</li>
-                    <li>Keep your browser updated to benefit from the latest security features</li>
-                </ul>
-                
-                <h4>Contact Us</h4>
-                <p>If you have any questions about data security, please contact us at security@elegantnotes.com.</p>
-                
-                <p class="legal-last-updated">Last updated: May 13, 2025</p>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-primary close-modal-btn">I Understand</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Contact Us Modal -->
-    <div class="modal" id="contact-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Contact Us</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label" for="contact-name">Your Name</label>
-                    <input type="text" id="contact-name" class="form-control" placeholder="Enter your name">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="contact-email">Email Address</label>
-                    <input type="email" id="contact-email" class="form-control" placeholder="Enter your email">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="contact-subject">Subject</label>
-                    <select id="contact-subject" class="form-control">
-                        <option value="">Select a subject</option>
-                        <option value="support">Technical Support</option>
-                        <option value="feedback">Feedback/Suggestions</option>
-                        <option value="bug">Report a Bug</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="contact-message">Message</label>
-                    <textarea id="contact-message" class="form-control" rows="5" placeholder="Type your message here..."></textarea>
-                </div>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-secondary close-modal-btn">Cancel</button>
-                <button id="send-message-btn" class="btn btn-primary">Send Message</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Toast messages container -->
-    <div class="toast-container" id="toast-container"></div>
+</footer>
 
-    <script src="js/main.js"></script>
+<!-- Premium Modal -->
+<div class="modal-overlay" id="premiumModal">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-header-bg modal-header-bg-1"></div>
+            <div class="modal-header-bg modal-header-bg-2"></div>
+
+            <h3 class="modal-title">Start Your Free Trial</h3>
+            <p class="modal-subtitle">Experience PaperNotes Premium for 14 days, no credit card required.</p>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <form id="trialForm">
+                <!-- Name Field (Required) -->
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name <span class="form-required">*</span></label>
+                    <input type="text" id="name" name="name" required class="form-input" placeholder="John Doe">
+                </div>
+
+                <!-- Email Field (Optional) -->
+                <div class="form-group">
+                    <label for="trialEmail" class="form-label">Email Address <span class="form-optional">(Optional)</span></label>
+                    <input type="email" id="trialEmail" name="email" class="form-input" placeholder="your@email.com">
+                    <p class="form-hint">We'll send you tips to get started with PaperNotes</p>
+                </div>
+
+                <!-- Terms Checkbox (Pre-checked) -->
+                <div class="form-group">
+                    <label class="form-checkbox">
+                        <input type="checkbox" name="terms" checked>
+                        <span class="form-checkbox-label">I agree to the <a href="#" class="form-link">Terms of Service</a> and <a href="#" class="form-link">Privacy Policy</a></span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="form-submit">
+                    Start My Free Trial
+                </button>
+            </form>
+
+            <!-- Close Link -->
+            <button id="closeModal" class="modal-close">Not now, maybe later</button>
+        </div>
+
+        <!-- Decorative Element -->
+        <div class="modal-decoration">
+            <i class="fa-solid fa-leaf"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Toast messages container -->
+<div class="toast-container" id="toast-container"></div>
+
+    <!-- JavaScript -->
+<script>
+    // Check if user already exists in session and redirect
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if user exists in localStorage
+        const userData = localStorage.getItem('paperNotes_user');
+        if (userData) {
+            const user = JSON.parse(userData);
+            // If user has a valid ID, redirect to index
+            if (user.userId) {
+                window.location.href = '/dashboard.html';
+            }
+        }
+    });
+
+    // Generate random user ID
+    function generateUserId(length = 16) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let id = '';
+        for (let i = 0; i < length; i++) {
+            id += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return id;
+    }
+
+    // DOM Elements
+    const tryFreeBtn = document.getElementById('tryFreeBtn');
+    const ctaTryFreeBtn = document.getElementById('ctaTryFreeBtn');
+    const heroTryFreeBtn = document.getElementById('heroTryFreeBtn');
+    const premiumModal = document.getElementById('premiumModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const trialForm = document.getElementById('trialForm');
+    const toastContainer = document.getElementById('toast-container');
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+
+    // Open Modal Function
+    function openModal() {
+        premiumModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling while modal is open
+    }
+
+    // Close Modal Function
+    function hideModal() {
+        premiumModal.classList.remove('active');
+        document.body.style.overflow = ''; // Enable scrolling again
+    }
+
+    // Event Listeners
+    tryFreeBtn.addEventListener('click', openModal);
+    ctaTryFreeBtn.addEventListener('click', openModal);
+    heroTryFreeBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', hideModal);
+
+    // Close modal when clicking outside the content
+    premiumModal.addEventListener('click', (e) => {
+        if (e.target === premiumModal) {
+            hideModal();
+        }
+    });
+
+    // Set up FAQ toggles
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            // Get the content div that follows this toggle button
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('i');
+
+            // Toggle the icon
+            if (icon.classList.contains('fa-plus')) {
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+            } else {
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+            }
+
+            // Toggle the content visibility
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        });
+    });
+
+    // Form Submission
+    trialForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('trialEmail').value;
+        const terms = document.querySelector('input[name="terms"]').checked;
+
+        // Validate form
+        if (!name) {
+            showToast('Please enter your name', 'error');
+            return;
+        }
+
+        if (!terms) {
+            showToast('Please agree to the terms', 'error');
+            return;
+        }
+
+        // Generate a unique user ID
+        const userId = generateUserId();
+
+        // Store data in local storage
+        localStorage.setItem('paperNotes_user', JSON.stringify({
+            userId: userId,
+            name: name,
+            email: email,
+            agreedToTerms: terms,
+            trialStarted: new Date().toISOString()
+        }));
+
+        // Also store in session storage for current session
+        sessionStorage.setItem('paperNotes_session', JSON.stringify({
+            userId: userId,
+            name: name,
+            loggedIn: true
+        }));
+
+        // Show success message
+        showToast('Trial started successfully!', 'success');
+
+        // Redirect after short delay
+        setTimeout(() => {
+            window.location.href = '/dashboard.html';
+        }, 1500);
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+
+        let className = 'toast';
+        let icon = 'fa-info-circle';
+
+        if (type === 'success') {
+            className += ' toast-success';
+            icon = 'fa-check-circle';
+        } else if (type === 'error') {
+            className += ' toast-error';
+            icon = 'fa-exclamation-circle';
+        }
+
+        toast.className = className;
+        toast.innerHTML = `
+            <span class="toast-icon"><i class="fas ${icon}"></i></span>
+            <span>${message}</span>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Animate toast in
+        setTimeout(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+        }, 10);
+
+        // Remove toast after delay
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(1rem)';
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+</script>
 </body>
 </html>
