@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Notes - Notebook</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <!-- Libraries for export functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Lora:wght@400;500;600&family=Merriweather:wght@300;400&family=Nunito:wght@400;600&family=Playfair+Display:wght@400;500;700&family=Poppins:wght@300;400;500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div class="toolbar" id="main-toolbar">
+            <div class="toolbar-content">
+                <div class="brand">
+                    <a href="index.html" class="back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <h1 class="app-title"><i class="fa-solid fa-book-open"></i> <span id="notebook-title">Notebook</span></h1>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-btns">
+                        <button id="delete-diary-btn" class="icon-btn" title="Delete Notebook">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        
+                        <div class="dropdown">
+                            <button class="icon-btn dropdown-toggle" id="export-btn" title="Export Notebook">
+                                <i class="fa-solid fa-file-export"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button id="export-pdf-btn" class="dropdown-item">
+                                    <i class="fa-solid fa-file-pdf"></i> Export as PDF
+                                </button>
+                                <button id="export-docx-btn" class="dropdown-item">
+                                    <i class="fa-solid fa-file-word"></i> Export as DOCX
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <button class="icon-btn dropdown-toggle" id="font-btn" title="Change Font">
+                                <i class="fa-solid fa-font"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button class="dropdown-item font-option" data-font="'Crimson Pro', serif">
+                                    <span style="font-family: 'Crimson Pro', serif;">Crimson Pro</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Lora', serif">
+                                    <span style="font-family: 'Lora', serif;">Lora</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Merriweather', serif">
+                                    <span style="font-family: 'Merriweather', serif;">Merriweather</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Playfair Display', serif">
+                                    <span style="font-family: 'Playfair Display', serif;">Playfair Display</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Poppins', sans-serif">
+                                    <span style="font-family: 'Poppins', sans-serif;">Poppins</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Nunito', sans-serif">
+                                    <span style="font-family: 'Nunito', sans-serif;">Nunito</span>
+                                </button>
+                                <button class="dropdown-item font-option" data-font="'Source Sans 3', sans-serif">
+                                    <span style="font-family: 'Source Sans 3', sans-serif;">Source Sans</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="color-picker">
+                            <div class="color-option active" style="background-color: #000000;" data-color="#000000"></div>
+                            <div class="color-option" style="background-color: #3366cc;" data-color="#3366cc"></div>
+                            <div class="color-option" style="background-color: #dc3545;" data-color="#dc3545"></div>
+                            <div class="color-option" style="background-color: #28a745;" data-color="#28a745"></div>
+                            <div class="color-option" style="background-color: #9c27b0;" data-color="#9c27b0"></div>
+                            <div class="color-option" style="background-color: #ff9800;" data-color="#ff9800"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="notes-container" id="notes-container">
+                <!-- Pages will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button for Focus Mode -->
+    <button id="focus-mode-btn" class="floating-action-btn" title="Toggle Focus Mode">
+        <i class="fa-solid fa-eye"></i>
+    </button>
+    
+    <!-- Formatting Help Modal -->
+    <div class="modal" id="formatting-help-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Formatting Help</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="formatting-tips">
+                <div class="tip">
+                    <h4><i class="fa-solid fa-font"></i> Fonts</h4>
+                    <p>Change your writing font using the font dropdown in the toolbar.</p>
+                </div>
+                
+                <div class="tip">
+                    <h4><i class="fa-solid fa-pen"></i> Writing</h4>
+                    <p>Just type normally. Your text will appear with the selected color.</p>
+                </div>
+                
+                <div class="tip">
+                    <h4><i class="fa-solid fa-copy"></i> Copying Content</h4>
+                    <p>Hover over any page and click the clipboard icon to copy the content.</p>
+                </div>
+                
+                <div class="tip">
+                    <h4><i class="fa-solid fa-eye"></i> Focus Mode</h4>
+                    <p>Click the eye icon in the bottom right corner to toggle focus mode for distraction-free writing.</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-primary close-modal-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help Button -->
+    <button id="help-btn" class="help-btn" title="Formatting Help">
+        <i class="fa-solid fa-question"></i>
+    </button>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="confirm-delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Delete Notebook</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <p>Are you sure you want to delete this notebook? This action cannot be undone.</p>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-secondary close-modal-btn">Cancel</button>
+                <button id="confirm-delete-btn" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast messages container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/note.js"></script>
+</body>
+</html>
