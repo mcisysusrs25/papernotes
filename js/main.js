@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const createDiaryBtn = document.getElementById('create-diary-btn');
     const diaryNameInput = document.getElementById('diary-name');
     const themeOptions = document.querySelectorAll('.theme-option');
+    const coverImageInput = document.getElementById('cover-image-input');
+    const coverImageLink = document.getElementById('cover-image-link');
+    const coverImagePreview = document.getElementById('cover-image-preview');
+    const imageTypeOptions = document.querySelectorAll('.image-type-option');
+    const coverImageSection = document.getElementById('cover-image-section');
+    const coverLinkSection = document.getElementById('cover-link-section');
     const toastContainer = document.getElementById('toast-container');
 
     // Check if all required elements exist
@@ -19,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // App State
     let diaries = JSON.parse(localStorage.getItem('diaries')) || {};
     let selectedPageColor = '#f5f1e7';
+    let selectedCoverType = 'color'; // color, image, or link
+    let coverImageData = null;
+    let coverImageUrl = '';
 
     // Initialize
     function init() {
@@ -45,12 +54,63 @@ document.addEventListener('DOMContentLoaded', function () {
             <p>Create New Notebook</p>
         `;
         createCard.addEventListener('click', function () {
-            modal.style.display = 'flex';
-            diaryNameInput.value = '';
-            diaryNameInput.focus();
+            openNewNotebookModal();
         });
 
         notebooksGrid.appendChild(createCard);
+    }
+
+    // Open new notebook modal with defaults
+    function openNewNotebookModal() {
+        // Reset form
+        selectedCoverType = 'color';
+        selectedPageColor = '#f5f1e7';
+        diaryNameInput.value = '';
+        coverImageInput.value = '';
+        coverImageLink.value = '';
+        coverImagePreview.style.backgroundImage = '';
+        coverImagePreview.style.display = 'none';
+        coverImageData = null;
+        coverImageUrl = '';
+        
+        // Update UI for selected cover type
+        imageTypeOptions.forEach(option => {
+            option.classList.toggle('selected', option.dataset.type === selectedCoverType);
+        });
+        
+        // Show/hide appropriate sections
+        updateCoverSectionVisibility();
+        
+        // Select default color
+        themeOptions.forEach(option => {
+            option.classList.toggle('selected', option.dataset.page === selectedPageColor);
+        });
+        
+        // Show modal and focus input
+        modal.style.display = 'flex';
+        diaryNameInput.focus();
+    }
+
+    // Update cover section visibility based on selected type
+    function updateCoverSectionVisibility() {
+        // Get color picker element
+        const colorPickerSection = document.getElementById('color-picker-section');
+        
+        if (coverImageSection && coverLinkSection && colorPickerSection) {
+            // Hide all sections first
+            coverImageSection.style.display = 'none';
+            coverLinkSection.style.display = 'none';
+            colorPickerSection.style.display = 'none';
+            
+            // Show only the relevant section based on selected type
+            if (selectedCoverType === 'image') {
+                coverImageSection.style.display = 'block';
+            } else if (selectedCoverType === 'link') {
+                coverLinkSection.style.display = 'block';
+            } else {
+                colorPickerSection.style.display = 'block';
+            }
+        }
     }
 
     // Create a notebook card
@@ -69,8 +129,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Get page count
         const pageCount = notebook.pages ? notebook.pages.length : 0;
 
+        // Determine cover style
+        let coverStyle = '';
+        if (notebook.coverType === 'color' || !notebook.coverType) {
+            coverStyle = `background-color: ${notebook.pageColor || '#f5f1e7'}`;
+        } else if (notebook.coverType === 'image' && notebook.coverImage) {
+            coverStyle = `background-image: url(${notebook.coverImage}); background-size: cover; background-position: center;`;
+        } else if (notebook.coverType === 'link' && notebook.coverLink) {
+            coverStyle = `background-image: url(${notebook.coverLink}); background-size: cover; background-position: center;`;
+        } else {
+            coverStyle = `background-color: ${notebook.pageColor || '#f5f1e7'}`;
+        }
+
         card.innerHTML = `
-            <div class="notebook-preview" style="background-color: ${notebook.pageColor}">
+            <div class="notebook-preview" style="${coverStyle}">
                 <div class="notebook-actions">
                     <button class="delete-notebook-btn page-action-btn" data-id="${id}" title="Delete">
                         <i class="fa-solid fa-trash"></i>
@@ -121,6 +193,41 @@ document.addEventListener('DOMContentLoaded', function () {
         showToast('Notebook deleted successfully!', 'success');
     }
 
+    // Handle file input for cover image
+    function handleCoverImageUpload(input) {
+        const file = input.files[0];
+        if (!file) return;
+        
+        // Check file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            showToast('Image is too large. Maximum size is 5MB.', 'error');
+            input.value = '';
+            return;
+        }
+        
+        // Check file type
+        if (!file.type.match('image.*')) {
+            showToast('Please select an image file.', 'error');
+            input.value = '';
+            return;
+        }
+        
+        // Read file as data URL
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            coverImageData = e.target.result;
+            // Show a simple thumbnail preview
+            if (coverImagePreview) {
+                coverImagePreview.style.backgroundImage = `url(${coverImageData})`;
+                coverImagePreview.style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(file);
+        
+        // Show a toast to confirm image selection
+        showToast('Image selected successfully', 'success');
+    }
+
     // Create a new diary
     function createNewDiary(name, pageColor) {
         // Show loading animation
@@ -128,13 +235,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         setTimeout(() => {
             const id = Date.now().toString();
-            diaries[id] = {
+            
+            // Create notebook object
+            const notebook = {
                 name,
                 pageColor,
                 pages: [''],
-                font: "'Crimson Pro', serif" // Default font
+                font: "'Crimson Pro', serif", // Default font
+                coverType: selectedCoverType
             };
-
+            
+            // Add cover image or link if selected
+            if (selectedCoverType === 'image' && coverImageData) {
+                notebook.coverImage = coverImageData;
+            } else if (selectedCoverType === 'link' && coverImageLink.value) {
+                notebook.coverLink = coverImageLink.value;
+            }
+            
+            diaries[id] = notebook;
             localStorage.setItem('diaries', JSON.stringify(diaries));
 
             // Reload notebooks
@@ -215,7 +333,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Setup event listeners safely
     function setupEventListeners() {
-
         // Footer modal links
         const termsLink = document.getElementById('terms-link');
         const privacyLink = document.getElementById('privacy-link');
@@ -261,13 +378,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // New diary button
         if (newDiaryBtn) {
             newDiaryBtn.addEventListener('click', function () {
-                modal.style.display = 'flex';
-                diaryNameInput.value = '';
-                diaryNameInput.focus();
-                themeOptions.forEach((option, index) => {
-                    option.classList.toggle('selected', index === 0);
-                });
-                selectedPageColor = '#f5f1e7';
+                openNewNotebookModal();
             });
         }
 
@@ -326,6 +437,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.classList.add('selected');
                     selectedPageColor = this.dataset.page;
                 });
+            });
+        }
+        
+        // Image type options
+        if (imageTypeOptions.length > 0) {
+            imageTypeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    imageTypeOptions.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedCoverType = this.dataset.type;
+                    updateCoverSectionVisibility();
+                });
+            });
+        }
+        
+        // Cover image upload
+        if (coverImageInput) {
+            coverImageInput.addEventListener('change', function() {
+                handleCoverImageUpload(this);
             });
         }
     }

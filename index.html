@@ -7,6 +7,47 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/footer.css">
+    <style>
+        /* Cover image preview styles */
+        .cover-preview {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+        
+        /* Cover type options */
+        .cover-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .cover-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .cover-option i {
+            margin-right: 5px;
+        }
+        
+        .cover-option.selected {
+            background-color: #4a6fa5;
+            color: white;
+            border-color: #3c5a8a;
+        }
+    </style>
 </head>
 <body>
     <div class="app-container">
@@ -87,6 +128,34 @@
             </div>
             
             <div class="form-group">
+                <label class="form-label">Cover Type</label>
+                <div class="cover-options">
+                    <div class="cover-option image-type-option selected" data-type="color">
+                        <i class="fa-solid fa-palette"></i> Color
+                    </div>
+                    <div class="cover-option image-type-option" data-type="image">
+                        <i class="fa-solid fa-image"></i> Upload Image
+                    </div>
+                    <div class="cover-option image-type-option" data-type="link">
+                        <i class="fa-solid fa-link"></i> Image URL
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="cover-image-section" style="display: none;">
+                <label class="form-label" for="cover-image-input">Upload Cover Image</label>
+                <input type="file" id="cover-image-input" class="form-control" accept="image/*">
+                <div id="cover-image-preview" class="cover-preview"></div>
+                <p class="form-hint">Maximum file size: 5MB</p>
+            </div>
+            
+            <div class="form-group" id="cover-link-section" style="display: none;">
+                <label class="form-label" for="cover-image-link">Image URL</label>
+                <input type="url" id="cover-image-link" class="form-control" placeholder="https://example.com/image.jpg">
+                <p class="form-hint">Enter a valid URL to an image</p>
+            </div>
+            
+            <div class="form-group" id="color-picker-section">
                 <label class="form-label">Choose Page Color</label>
                 <div class="theme-options">
                     <div class="theme-option selected" data-page="#f5f1e7" style="background-color: #f5f1e7;"></div>
