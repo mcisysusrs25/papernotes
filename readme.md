@@ -1,7 +1,5 @@
 # ✨ PaperNotes
 
-![PaperNotes Preview](![alt text](assets/snapshot.png))  
-*Your thoughts, beautifully organized*
 
 ## 🌟 A Minimalist Digital Notebook
 
@@ -58,8 +56,8 @@ Crafted with care by [Sundar Raj Sharma, MCIS, YSU] for those who value:
 🛡️ **Privacy** over convenience  
 🎨 **Elegance** over excess  
 
+
 *"In a world of complex apps, sometimes you just need a beautiful place to write."*
 
----
 
 © 2025 Paper Notes | All rights reserved
