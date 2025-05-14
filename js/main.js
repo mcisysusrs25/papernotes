@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            window.location.href = `notes.html?id=${id}`;
+            window.location.href = `/papernotes/notes.html?id=${id}`;
         });
 
         return card;
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hideLoading();
 
             // Redirect to the new notebook
-            window.location.href = `notes.html?id=${id}`;
+            window.location.href = `/papernotes/notes.html?id=${id}`;
         }, 600);
     }
 
